@@ -1,0 +1,96 @@
+#ranking .table-wrap{max-height:720px;overflow:auto}#ranking table{min-width:1480px}#ranking th{position:sticky;top:0;z-index:2;background:#1a2a31}#ranking td{vertical-align:middle}#ranking td:nth-child(2){min-width:230px}#ranking td:nth-child(9){min-width:190px}.rank-sub{display:block;margin-top:5px;color:#91aaa0}.ranking-num{color:#cafa8d}.rank-detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:22px 0}.rank-detail-grid span{padding:14px;background:#1b332d;border-radius:10px;color:#aac2b5;font-size:12px}.rank-detail-grid b{display:block;color:#e6f5e6;font-size:16px;margin-top:5px}#rankCount{color:#c8eea8;font-size:13px;margin:12px 0}.rank-explain{line-height:1.75;color:#a9c1b5;font-size:13px}@media(max-width:600px){.rank-detail-grid{grid-template-columns:1fr 1fr}}
+
+.rank-film{display:grid;grid-template-columns: .8fr 1.2fr;gap:28px;align-items:center;padding:28px;margin:0 0 36px;border:1px solid rgba(140,255,218,.24);border-radius:22px;background:radial-gradient(circle at 12% 15%,rgba(74,227,190,.15),transparent 45%),linear-gradient(130deg,#101e2e,#07121f);box-shadow:0 18px 50px #0004}.rank-film h3{font-size:clamp(22px,2.5vw,32px);line-height:1.25;margin:12px 0}.rank-film p{color:#aebfc8;line-height:1.8}.film-kicker,.film-hint{color:#a8f8c7;letter-spacing:.08em;font-size:12px}.film-hint{display:block;margin-top:22px}.rank-film video{width:100%;max-height:420px;background:#000;border-radius:14px;box-shadow:0 10px 35px #0007}.rank-update-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.rank-update-actions button{border:0;border-radius:9px;background:#bef775;color:#10251b;font-weight:700;padding:12px 16px;cursor:pointer}.rank-update-actions button:disabled{opacity:.6;cursor:wait}@media(max-width:800px){.rank-film{grid-template-columns:1fr;padding:20px}.rank-film-copy h3{font-size:23px}}
+
+.rank-bench-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.rank-bench-tabs button {
+  display: grid;
+  gap: 4px;
+  padding: 13px 16px;
+  text-align: left;
+  color: #e4eeeb;
+  border: 1px solid #35474c;
+  border-radius: 9px;
+  background: #121e25;
+  cursor: pointer;
+}
+
+.rank-bench-tabs button.active {
+  border-color: #91b774;
+  background: linear-gradient(100deg, #2b4937, #172b2e);
+  color: #daf6af;
+}
+
+.rank-bench-tabs small, .rank-gpt-card small { color: #b1c7bf; line-height: 1.4; }
+
+#ranking .rank-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 20px;
+  align-items: center;
+}
+
+#rankMethod, #rankStatus { font-size: 12px; line-height: 1.55; }
+#rankStatus { flex-basis: 100%; color: #bcd4c9; }
+#rankOfficial { font-size: 12px; }
+
+.rank-gpt-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(285px, .85fr);
+  border-radius: 13px;
+}
+
+.rank-gpt-links {
+  display: flex;
+  gap: 6px 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.rank-gpt-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.rank-gpt-card {
+  display: grid;
+  text-align: left;
+  padding: 12px;
+  gap: 4px;
+  border: 1px solid #4a6f62;
+  border-radius: 10px;
+  background: #122821;
+  color: #e7f0e8;
+}
+
+button.rank-gpt-card { cursor: pointer; }
+button.rank-gpt-card:hover { background: #1c362b; border-color: #83a973; }
+.rank-gpt-card span { font-size: 12px; font-weight: 750; }
+.rank-gpt-card b { font-size: 26px; color: #d1f58e; line-height: 1.15; }
+.rank-gpt-card .rank-unlisted { font-size: 19px; color: #bdd1c6; }
+
+#ranking[data-benchmark="live"] table { min-width: 820px; }
+#ranking[data-benchmark="arena"] table { min-width: 1040px; }
+#ranking table td:nth-child(2) { min-width: 180px; }
+#ranking table td:last-child { min-width: 140px; }
+#ranking .rank-total { font-weight: 800; color: #e5f5de; }
+#ranking tr.rank-featured { background: #17332a; }
+#ranking td, #ranking th { font-variant-numeric: tabular-nums; }
+#ranking .table-wrap { scrollbar-color: #45665a #102023; }
+
+@media(max-width: 800px) {
+  .rank-gpt-feature { grid-template-columns: 1fr; }
+}
+
+@media(max-width: 630px) {
+  #ranking .rank-summary { grid-template-columns: 1fr; }
+  .rank-gpt-feature { padding: 16px; }
+  .rank-bench-tabs button { padding-inline: 10px; }
+}

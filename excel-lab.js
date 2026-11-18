@@ -1,0 +1,27 @@
+const excelPhases=[
+ {title:'01 / 查错与计划',caption:'先理解数据，再决定怎么处理。',prompt:practiceCases[1].prompt},
+ {title:'02 / 清洗与对账',caption:'统一部门、保留证据、隔离疑点。',prompt:`按刚才核对的计划，继续处理 deepseek-excel-lab.xlsx；本文件为虚构练习。严格遵守“练习说明”，如发现说明未覆盖的情况，先询问我。
+请生成一个新文件“分析结果.xlsx”，不要覆盖源文件：
+1. 按“部门映射”统一名称。金额可去除人民币符号和千分位后转换为数值；原始值、源表Excel行号、单据ID都要保留。
+2. 单据ID完全相同且所有字段相同，保留原表首次记录，后续重复行进入剔除日志；同ID但任一业务字段冲突，整组进入隔离日志，不自行选择正确版本。
+3. 部门缺失或金额无法解析，隔离待确认，不造值、不用零代替；未知部门先报告。日志逐行记录原因和源行号。
+4. 清洗明细保留待审批记录，但费用汇总仅使用已审批记录。日期保持可排序，金额为数值而非带符号的文字。
+5. 对账说明要按互斥口径列出原始行数、去重剔除行数、冲突隔离行数、其他无效行数、清洗后行数、已审批和待审批行数，确保原始行数能逐项勾稽。
+先交付清洗明细和日志，告诉我文件位置，等我检查后再汇总分析。若无法生成真正的 .xlsx，明确说明，不改扩展名冒充成功。`},
+ {title:'03 / 分析与汇报',caption:'按相同口径匹配，展示可核验的结果。',prompt:`请在刚才的“分析结果.xlsx”上继续，不改变已确认的清洗规则，保留源文件和处理日志。
+目标是分析 2026年10月的已审批费用、对比9月，并与10月预算匹配。单位：人民币元，仅为教学费用口径。
+1. 汇总到“年月＋标准部门＋费用类别”，预算匹配使用完全相同的键，先检查预算键唯一性。不要因连接扩大行数而重复计费。
+2. 输出部门×类别的9月费用、10月费用、10月预算、金额差异（10月费用－预算）、预算执行率（10月费用÷预算）、环比（10月费用－9月费用）÷9月费用。仅预算与基期有效时计算相应比率。
+3. 缺失预算标“预算缺失”，不要填0，金额差异与执行率不计算；预算为0且发生费用标“无预算发生”，执行率不计算。基期为0或缺失时，环比标“不可比”。实际合法的0与数据缺失要区分。
+4. 制作“各部门9月与10月费用对比”和“10月费用类别构成”两张图，金额和图表都须来自可追溯的清洗数据；使用公式汇总或可明确刷新的原生数据机制，保留明细到汇总的引用。若有静态值或无法自动更新的图表，显著说明刷新方法，不声称可自动更新。
+5. 结论控制在3条，每条提供数字、比较口径、源表或汇总位置；风险标记只是练习规则，不判断舞弊或违规，不编造业务原因。总费用与明细勾稽；预算有缺失时，不用不完整预算计算整个公司的执行率。
+6. 打开或重新读取输出文件，检查公式错误、行数、总额、日期和两张图表。告诉我文件位置、验证结果和修改一条已审批金额后如何刷新。依赖或绘图能力不足时如实说明，保留已完成部分并请我确认后续方案。`}
+];
+const excelCard=document.querySelectorAll('#practiceLabs .practice-card')[1];
+const excelWorkshop=document.createElement('div');excelWorkshop.className='excel-workshop';
+excelWorkshop.innerHTML=`<div class="excel-kit"><div class="excel-kit-mark" aria-hidden="true">X<span>▦</span></div><div><span class="eyebrow">EXCEL FIELD LAB / 虚构练习包</span><h3>同一份数据，一起查出问题。</h3><p>34 行明细 · 5 个部门 · 2 个月 · 4 张工作表。无需提供真实业务数据。</p></div><a class="primary" href="downloads/deepseek-excel-lab.xlsx" download="deepseek-excel-lab.xlsx">下载 Excel 练习包 ↓</a></div><div class="excel-flow"><span>① 发现问题</span><i>→</i><span>② 规则清洗</span><i>→</i><span>③ 预算对比</span><i>→</i><span>④ 图表与复核</span></div><div class="excel-console"><div class="excel-phase-tabs" role="group" aria-label="选择 Excel 实操轮次">${excelPhases.map((p,i)=>`<button data-excel-phase="${i}" aria-pressed="${i===0}">${p.title}</button>`).join('')}</div><div class="excel-phase-body"><div><span class="eyebrow">在同一个 Harness 会话中依次发送</span><h4 id="excelPhaseTitle"></h4><p id="excelPhaseCaption"></p><div class="actions"><button class="primary" id="excelCopyLaunch">复制本轮指令并打开 Harness ↗</button><button id="excelCopy">只复制本轮指令 ⧉</button></div><p id="excelCopyStatus" class="note" role="status">下载后请先把文件保存到选定工作区，引用实际文件；复制按钮只复制任务，需在应用内粘贴并发送。</p></div><details><summary>展开完整指令</summary><pre id="excelPhasePrompt"></pre></details></div></div><details class="excel-checks"><summary>讲师验收卡 · 学员先做，再展开对照</summary><div class="excel-control-grid"><div><small>原始明细</small><b>34 行</b></div><div><small>清洗后明细</small><b>29 行</b></div><div><small>计入汇总</small><b>25 行</b></div><div><small>保留但不计费</small><b>4 行待审批</b></div></div><p>34 ＝ 1 行完全重复剔除 ＋ 2 行冲突隔离 ＋ 1 行部门缺失 ＋ 1 行金额无效 ＋ 29 行清洗明细。29 ＝ 25 行已审批 ＋ 4 行待审批。</p><div class="excel-control-grid"><div><small>9月已审批费用</small><b>43,750 元</b></div><div><small>10月已审批费用</small><b>40,950 元</b></div><div><small>10月相对9月</small><b>−6.4%</b></div></div><ul><li>完全重复：R026 仅保留首次记录；冲突：R027 两条金额不同，整组隔离。</li><li>R033 部门缺失，R034 金额为“待补”，不能让 AI 自动补全或当成零。</li><li>10月部门费用：质量 4,800；生产 4,950；营销 10,800；信息 8,950；职能 11,450 元，合计 40,950 元。</li><li>信息／办公预算缺失；营销／培训预算为0但费用为3,350元。两者都不计算执行率，原因必须分别说明。</li><li>在输出副本将 R016 的金额增加100元，10月总额应增加100元；按输出机制重算或刷新后，质量部门汇总和相关图表应同步反映。不要修改下载的源练习包。</li></ul><p class="note">以上为本培训虚构数据的固定验收值，已独立计算，不代表真实财务结论。</p></details><div class="excel-prereq"><b>课前检查与现场卡点</b><p>先用讲师账号试读练习包、写出一个新 .xlsx 并检查图表。Harness 版本、Office 技能、依赖与模型权限会影响结果；遇到“不能读文件”先核对工作区和文件引用，遇到“不能生成”先确认实际技能，不反复让 AI 口头承诺。</p><p>本练习使用本地文件，但模型调用可能涉及服务商处理；按公司规定选择工具及模型。第一次课只用本页虚构资料。</p><a href="https://www.deepseek.com/harness/" target="_blank" rel="noopener noreferrer">官方表格分析介绍 ↗</a><a href="https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-office/README.md" target="_blank" rel="noopener noreferrer">官方 Office 技能说明 ↗</a><span class="note">能力资料核对：2026.11.09 · 本案例为原创培训设计</span></div>`;
+excelCard.appendChild(excelWorkshop);let excelPhase=0;
+function showExcelPhase(i){excelPhase=i;excelWorkshop.querySelectorAll('[data-excel-phase]').forEach((b,j)=>{b.classList.toggle('active',j===i);b.setAttribute('aria-pressed',String(j===i))});document.getElementById('excelPhaseTitle').textContent=excelPhases[i].title;document.getElementById('excelPhaseCaption').textContent=excelPhases[i].caption;document.getElementById('excelPhasePrompt').textContent=excelPhases[i].prompt;document.getElementById('excelCopyStatus').textContent='请在同一个 Harness 会话中继续；先检查上一轮结果，再发送当前轮次。';}
+excelWorkshop.addEventListener('click',e=>{const b=e.target.closest('[data-excel-phase]');if(b)showExcelPhase(Number(b.dataset.excelPhase))});
+async function copyExcelPhase(launch){const status=document.getElementById('excelCopyStatus');try{await navigator.clipboard.writeText(excelPhases[excelPhase].prompt);status.textContent='本轮指令已复制；请在 Harness 的练习会话粘贴、发送，按提示确认执行。'+(launch?'正在尝试唤起应用，未打开时请手动启动。':'');if(launch)location.href='dsh://';}catch{status.textContent='自动复制未成功，请展开完整指令，手动选择并复制。';}}
+document.getElementById('excelCopyLaunch').onclick=()=>copyExcelPhase(true);document.getElementById('excelCopy').onclick=()=>copyExcelPhase(false);showExcelPhase(0);

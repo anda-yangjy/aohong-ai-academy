@@ -1,0 +1,6 @@
+'use strict';
+const officialKlingVideo='https://s16-kling.klingai.com/kos/s101/nlav112918/kling-homepage-aio/hero-v4-banner-1-en.9f62344ea45529c0.mp4';
+const officialCard=document.createElement('article');officialCard.className='official-cinema-card';officialCard.innerHTML='<div class="eyebrow">OFFICIAL SHOWCASE / 主流 AI 视频能力展示</div><h3>可灵 Kling 4.0 · 官方宣传展示</h3><p>看看生成式 AI 如何表达镜头、运动与视觉细节。点击下方按钮，直接在上方播放器观看官方公开片源。</p><div class="actions"><button id="watchOfficialVideo">▷ 一键观看官方 AI 宣传片</button><a href="https://kling.ai/" target="_blank" rel="noopener noreferrer">可灵官方展示页 ↗</a><a href="https://seed.bytedance.com/en/seedance2_5" target="_blank" rel="noopener noreferrer">Seedance 官方作品展示 ↗</a></div><div class="official-video-info">片源来自可灵官网公开展示，保留原始链接，不下载转载。联网播放；如片源调整，可打开官方展示页。</div>';
+document.querySelector('.cinema-controls').after(officialCard);
+document.querySelector('#watchOfficialVideo').onclick=()=>{setMovie(officialKlingVideo,'可灵 Kling 4.0 官方宣传展示 · 片源：kling.ai · 联网播放');player.poster='';playMovie();player.scrollIntoView({behavior:'smooth',block:'center'});};
+player.addEventListener('error',()=>{if(player.getAttribute('src')===officialKlingVideo){document.querySelector('#videoProvenance').textContent='官方片源暂不可用或当前网络无法访问，请使用下方“可灵官方展示页”观看。';}});
